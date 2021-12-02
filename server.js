@@ -21,7 +21,7 @@ const FileStore = sessionFileStore(session);
 const myFileStore = new FileStore({});
 app.use(session({store: myFileStore, secret: "vYvxrRfgureXnbFuuu", resave: false, saveUninitialized: false,
   genid: req => {
-    return crypto.randomBytes(4).toString("hex");
+    return crypto.randomBytes(8).toString("hex");
   }
 }));
 
@@ -115,14 +115,14 @@ app.get("/api/playing/", async (req, res) => {
     let sid = req.query.sid;
     myFileStore.get(sid, async (err, sess) => {
       if (err) {
-        res.status(401).end(err);
+        res.sendStatus(403);
         return;
       }
       try {
         var currentlyPlaying = await playing(sess.accessToken);
       } catch (err) {
         console.log(err);
-        res.sendStatus(401);
+        res.sendStatus(403);
         return;
       }
       if (currentlyPlaying.status == 204) {
@@ -142,14 +142,14 @@ app.get("/api/playing-oneline/", async (req, res) => {
     let sid = req.query.sid;
     myFileStore.get(sid, async (err, sess) => {
       if (err) {
-        res.status(401).end(err);
+        res.sendStatus(403);
         return;
       }
       try {
         var currentlyPlaying = await playing(sess.accessToken);
       } catch (err) {
         console.log(err);
-        res.sendStatus(401);
+        res.sendStatus(403);
         return;
       }
       if (currentlyPlaying.status == 204) {
