@@ -1,0 +1,20 @@
+html
+  head
+    title Spotify API
+    link(rel="stylesheet", href="/css/base.css")
+  body
+    h1 Spotify Currently Playing Simple API
+    if sess.loggedIn
+      p Welcome, #{sess.displayName}
+      img(src=sess.imageUrl)
+      p
+        a(href="/playing/") Currently playing
+      p
+        code curl spotify.robertq.soda.csua.berkeley.edu/api/playing-oneline?sid=#{sess.id}
+      p
+        code curl spotify.robertq.soda.csua.berkeley.edu/api/playing?sid=#{sess.id}
+      p
+        a(href="/logout/") logout
+    else
+      p
+        a(href="/login/") login

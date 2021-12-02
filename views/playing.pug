@@ -1,0 +1,13 @@
+html
+  head
+    title Spotify API - Currently Playing
+    link(rel="stylesheet", href="/css/base.css")
+  body
+    h2 Currently Playing
+    h3 #{sess.displayName}
+    ul
+      li Artist: #{artists}
+      li Track: #{data.item.name}
+      li Album: #{data.item.album.name}
+      li #{data.is_playing?"Playing":"Paused"}: #{msToTime(data.progress_ms)}/#{msToTime(data.item.duration_ms)}
+    a(href="/playing/") Refresh
